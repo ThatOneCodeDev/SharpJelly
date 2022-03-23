@@ -40,6 +40,7 @@ namespace SharpJelly
             return await response.Content.ReadAsStringAsync();
         }
 
+
         public async Task<string> ImposeUserPolicyAsync(string userID, Policy policy)
         {
             using var client = new HttpClient();
@@ -51,7 +52,12 @@ namespace SharpJelly
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> ListUsersAsync()
+        /// <summary>
+        /// Querys the server for a list of all user accounts registered on the Jellyfin server in context.
+        /// </summary>
+        /// <returns>A json formatted string containing all registered Jellyfin users and associated configurations.</returns>
+        /// <exception cref="HttpRequestException">The server replied to the request with a non-success status code.</exception>
+        public async Task<string> ListUsersRawAsync()
         {
             using var client = new HttpClient();
             var url = $"{ServerURI}/Users";
@@ -59,6 +65,32 @@ namespace SharpJelly
             var response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
+        }
+
+        /// <summary>
+        /// Searches the supplied payload that can be obtained by calling the ListUsersRawAsync method and attempts to find the specified user.
+        /// </summary>
+        /// <param name="listUsersResult"></param>
+        /// <param name="targetUser"></param>
+        /// <returns>JFUser object representing a Jellyfin user, or null if the user wasn't found.</returns>
+        public static JFUser? JFUserSearcher(string listUsersResult, string targetUser)
+        {
+            var JsonObject = JsonDocument.Parse(listUsersResult);
+            foreach (var array in JsonObject.RootElement.EnumerateArray())// loop each object contained in root array.
+            {
+                foreach (var obj in array.EnumerateObject())// loop each element contained within the object in context.
+                {
+                    if (obj.Name == "Name")
+                    {
+                        if (obj.Value.GetString() == targetUser)
+                        {
+                            // Found our user!
+                            return JsonSerializer.Deserialize<JFUser>(array);
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }
