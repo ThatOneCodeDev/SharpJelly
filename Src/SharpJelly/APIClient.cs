@@ -2,6 +2,10 @@
 using System.Text;
 using System.Text.Json;
 
+/// <summary>
+/// Please note that this API is in an early development phase and is only a mere prototype at this time.
+/// Namespace and class structures are prone to change at any time while early development is underway. -Jerhynh
+/// </summary>
 namespace SharpJelly
 {
     public class APIClient
