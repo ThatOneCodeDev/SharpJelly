@@ -2,16 +2,30 @@
 using System.Text;
 using System.Text.Json;
 
-/// <summary>
-/// Please note that this API is in an early development phase and is only a mere prototype at this time.
-/// Namespace and class structures are prone to change at any time while early development is underway. -Jerhynh
-/// </summary>
+
 namespace SharpJelly
 {
+    /// <summary>
+    /// APIClient contains all externally callable methods used to interact with the Jellyfin API.
+    /// </summary>
     public class APIClient
     {
+        /// <summary>
+        /// The address or "URI" of the server.
+        /// </summary>
         public string ServerURI { get; set; }
+
+        /// <summary>
+        /// The APIToken or authorization token supplied by the server to allow for use of elevated API endpoints.
+        /// </summary>
         public string APIToken { get; set; }
+
+        /// <summary>
+        /// Default ctor for the APIClient class.
+        /// </summary>
+        /// <param name="ServerURI"></param>
+        /// <param name="APIToken"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public APIClient(string ServerURI, string APIToken)
         {
             // Ensure arguments aren't null, next dotnet version implements a cleaner way to do this without declaring these.
@@ -101,7 +115,8 @@ namespace SharpJelly
         /// </summary>
         /// <returns>A json formatted string containing all registered Jellyfin users and associated configurations.</returns>
         /// <exception cref="HttpRequestException">The server replied to the request with a non-success status code.</exception>
-        public async Task<string> ListUsersRawAsync()
+        public async Task<string> ListUsersRawAsync() //We shouldn't be returning raw json responses in an API wrapper.
+                                                      //ToDo: Rewrite method to enumerate all returned user entries and return a list object of JFUser objects.
         {
             using var client = new HttpClient();
             var url = $"{ServerURI}/Users";
