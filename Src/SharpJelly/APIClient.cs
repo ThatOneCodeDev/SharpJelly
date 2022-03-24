@@ -14,9 +14,35 @@ namespace SharpJelly
         public string APIToken { get; set; }
         public APIClient(string ServerURI, string APIToken)
         {
+            // Ensure arguments aren't null, next dotnet version implements a cleaner way to do this without declaring these.
+            if (ServerURI == null)
+                throw new ArgumentNullException($"{nameof(this.ServerURI)} argument values cannot be null.");
+            if (APIToken == null)
+                throw new ArgumentNullException($"{nameof(this.APIToken)} argument values cannot be null.");
+
+            if (ServerURI.EndsWith("/")) 
+                ServerURI = ServerURI.Substring(0, ServerURI.Length - 1);
+
             this.ServerURI = ServerURI;
             this.APIToken = APIToken;
         }
+
+
+        /// <summary>
+        /// Querys the server's health endpoint. (Note): It is reccomended to call this upon startup to validate configuration.
+        /// </summary>
+        /// <returns>A response indicating whether the server is healthy or not.</returns>
+        /// <exception cref="HttpRequestException">The server replied to the request with a non-success status code.</exception>
+        public async Task<string> CheckServerHealthAsync()
+        {
+            using var client = new HttpClient();
+            var url = $"{ServerURI}/health";
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
+        }
+
+
 
         public async Task<string> CreateUserAsync(string Name, string Password)
         {
