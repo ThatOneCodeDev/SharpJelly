@@ -42,8 +42,12 @@ namespace SharpJelly
             return await response.Content.ReadAsStringAsync();
         }
 
-
-
+        /// <summary>
+        /// Registers a new JFuser on the server.
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="Password"></param>
+        /// <returns>A json response payload representing th created JFUser.</returns>
         public async Task<string> CreateUserAsync(string Name, string Password)
         {
             using var client = new HttpClient();
@@ -60,6 +64,11 @@ namespace SharpJelly
             return await response.Content.ReadAsStringAsync();
         }
 
+        /// <summary>
+        /// Deletes a JF user from the server.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns>204 response or Json payload detailing the user deletion failure.</returns>
         public async Task<string> DeleteUserAsync(string userID)
         {
             using var client = new HttpClient();
@@ -70,7 +79,12 @@ namespace SharpJelly
             return await response.Content.ReadAsStringAsync();
         }
 
-
+        /// <summary>
+        /// Applies a modified user policy to the specified JFUser by userID.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="policy"></param>
+        /// <returns>204 response or Json payload detailing the reason why the policy update failed.</returns>
         public async Task<string> ImposeUserPolicyAsync(string userID, Policy policy)
         {
             using var client = new HttpClient();
