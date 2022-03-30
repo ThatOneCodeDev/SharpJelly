@@ -28,17 +28,12 @@ namespace SharpJelly
         /// <exception cref="ArgumentNullException"></exception>
         public APIClient(string ServerURI, string APIToken)
         {
-            // Ensure arguments aren't null, next dotnet version implements a cleaner way to do this without declaring these.
-            if (ServerURI == null)
-                throw new ArgumentNullException($"{nameof(this.ServerURI)} argument values cannot be null.");
-            if (APIToken == null)
-                throw new ArgumentNullException($"{nameof(this.APIToken)} argument values cannot be null.");
 
-            if (ServerURI.EndsWith("/")) 
-                ServerURI = ServerURI.Substring(0, ServerURI.Length - 1);
 
-            this.ServerURI = ServerURI;
-            this.APIToken = APIToken;
+            this.ServerURI = ServerURI ?? throw new ArgumentNullException(nameof(ServerURI)); ;
+            this.APIToken = APIToken ?? throw new ArgumentNullException(nameof(APIToken));
+            if (this.ServerURI.EndsWith("/"))
+                this.ServerURI = this.ServerURI[..(ServerURI.Length - 1)];
         }
 
 
