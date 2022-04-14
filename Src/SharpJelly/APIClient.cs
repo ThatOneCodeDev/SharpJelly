@@ -28,14 +28,11 @@ namespace SharpJelly
         /// <exception cref="ArgumentNullException"></exception>
         public APIClient(string ServerURI, string APIToken)
         {
-
-
-            this.ServerURI = ServerURI ?? throw new ArgumentNullException(nameof(ServerURI)); ;
+            this.ServerURI = ServerURI ?? throw new ArgumentNullException(nameof(ServerURI));
             this.APIToken = APIToken ?? throw new ArgumentNullException(nameof(APIToken));
             if (this.ServerURI.EndsWith("/"))
                 this.ServerURI = this.ServerURI[..(ServerURI.Length - 1)];
         }
-
 
         /// <summary>
         /// Querys the server's health endpoint. (Note): It is reccomended to call this upon startup to validate configuration.
