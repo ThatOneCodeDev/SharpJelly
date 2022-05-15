@@ -24,6 +24,8 @@ namespace SharpJellyTesting
             if (await apiClient.CheckServerHealthAsync() == "Healthy")
                 Console.WriteLine($"Connection to {serverURI} valid and healthy!");
 
+            var user = SharpJelly.Helpers.JsonHelpers.FindJFUser(await apiClient.ListUsersRawAsync(), "test");
+            Console.WriteLine(user.Policy);
             Console.WriteLine("Loading tests...");
 
             // ToDo: Write tests :p

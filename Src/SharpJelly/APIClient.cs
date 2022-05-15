@@ -102,6 +102,25 @@ namespace SharpJelly
             return await response.Content.ReadAsStringAsync();
         }
 
+
+        /// <summary>
+        /// Applies a modified user policy to the specified JFUser by userID.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="passwordReset"></param>
+        /// <returns>204 response or Json payload detailing the reason why the policy update failed.</returns>
+        [Obsolete("This method is deprecated and will be removed in a future release. Use the AtlasAuthProvider plugin instead.")]
+        public async Task<string> ResetUserPasswordAsync(string userID, PasswordReset passwordReset)
+        {
+            using var client = new HttpClient();
+            var url = $"{ServerURI}/Users/{userID}/Password";
+            client.DefaultRequestHeaders.Add("X-Emby-Token", APIToken);
+            string jsonPayload = JsonSerializer.Serialize(passwordReset);
+            var response = await client.PostAsync(url, new StringContent(jsonPayload, Encoding.UTF8, "application/json"));
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
+        }
+
         /// <summary>
         /// Querys the server for a list of all user accounts registered on the Jellyfin server in context.
         /// </summary>
