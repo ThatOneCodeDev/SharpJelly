@@ -7,8 +7,10 @@ namespace SharpJellyTesting
     {
         static async Task Main(string[] args)
         {
-            string? authorizationKey = Environment.GetEnvironmentVariable("_JFKey", EnvironmentVariableTarget.User);
-            string? serverURI = Environment.GetEnvironmentVariable("_JFURI", EnvironmentVariableTarget.User);
+            //string? authorizationKey = Environment.GetEnvironmentVariable("_JFKey", EnvironmentVariableTarget.User);
+            //string? serverURI = Environment.GetEnvironmentVariable("_JFURI", EnvironmentVariableTarget.User);
+            string? authorizationKey = "82f0c035c7d04b0d98a70869b82d5a68"; // Pissenshitter
+            string? serverURI = "https://veast.network/jellyfin/";
             if (authorizationKey == null)
             {
                 Console.WriteLine("No jellyfin API key was set in environment. Please set a user environment variable with your Jellyfin API key titled: _JFKey");
@@ -24,11 +26,19 @@ namespace SharpJellyTesting
             if (await apiClient.CheckServerHealthAsync() == "Healthy")
                 Console.WriteLine($"Connection to {serverURI} valid and healthy!");
 
-            var user = SharpJelly.Helpers.JsonHelpers.FindJFUser(await apiClient.ListUsersRawAsync(), "test");
-            Console.WriteLine(user!.Policy);
-            Console.WriteLine("Loading tests...");
+            //var user = SharpJelly.Helpers.JsonHelpers.FindJFUser(await apiClient.ListUsersRawAsync(), "jerhynh");
+            //Console.WriteLine(user!.Policy.IsAdministrator);
+            //Console.WriteLine("Loading tests...");
 
-            // ToDo: Write tests :p
+
+            //Console.WriteLine(await apiClient.CreateUserAsync("PissenShit", "Test69!")); 
+            //var user = SharpJelly.Helpers.JsonHelpers.FindJFUser(await apiClient.ListUsersRawAsync(), "PissenShit");
+            //user!.Policy!.IsDisabled = false;
+            //await apiClient.ImposeUserPolicyAsync(user!.Id!, user.Policy);
+
+            Console.WriteLine(await apiClient.DeleteUserAsync("c52326acb6814b8b987bf0eb2345b0f0")); 
+
+
         }
     }
 }

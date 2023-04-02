@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "y+cmFk+basX0jIWT9uWobMlkhC1GSUOmaKZHd/sSg3slaWh+OLvMRgUt3zeeGM8s/jo3prE/KGkV1gliZ+Jkgg==",
+  "dgSpecHash": "Ms3P4246btTA1AoDoMIQ4YBBF+qipVuoZEmBX7X+dYHxcsfmzT6kjO9TGUrqPa9zuY2S2ImkaqfEiAHt8uzT8Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jerhy\\Documents\\GitHub\\SharpJelly\\Src\\SharpJelly\\SharpJelly.csproj",
+  "projectFilePath": "C:\\Users\\Jerhy\\Documents\\GitHub\\SharpJelly\\Src\\SharpJelly\\SharpJelly.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Jerhy\\Documents\\GitHub\\SharpJelly\\Src\\SharpJelly\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
